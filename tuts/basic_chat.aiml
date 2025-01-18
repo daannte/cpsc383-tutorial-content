@@ -1,0 +1,50 @@
+<aiml version="1.0.1" encoding="UTF-8">
+    <category>
+        <pattern>HELLO</pattern>
+        <template>
+            Well, hello!
+        </template>
+    </category>
+
+    <category>
+        <pattern>BACON</pattern>
+        <template>
+            Hello, John Doe 
+        </template>
+    </category>
+    
+    <category>
+        <pattern>WHAT ARE YOU</pattern>
+        <template>
+            I'm a bot, silly!
+        </template>
+    </category>
+
+    <category>
+        <pattern>HOW ARE YOU</pattern>
+        <template>
+            <random>
+                <li>I'm doing great, thanks!</li>
+                <li>I'm good, how about you?</li>
+                <li>I'm feeling awesome today!</li>
+                <li>Not too great.</li>
+            </random>
+        </template>
+    </category>
+<category>
+    <pattern>ONE TIME I *</pattern>
+    <template>
+        <random>
+            <li>Go on.</li>
+            <li>How old are you?</li>
+            <li>Be more specific.</li>
+            <li>I did not know that.</li>
+            <li>Are you telling the truth?</li>
+            <li>I don't know what that means.</li>
+            <li>Try to tell me that another way.</li>
+            <li>Are you talking about an animal, vegetable or mineral?</li>
+            <li>What is it?</li>
+        </random>
+    </template>
+</category>
+</aiml>

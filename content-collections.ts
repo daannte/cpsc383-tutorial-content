@@ -16,6 +16,8 @@ const tutorials = defineCollection({
   include: "**/*.mdx",
   schema: (z) => ({
     title: z.string(),
+    tutorial: z.number().min(1).max(2),
+    disabled: z.boolean(),
   }),
   transform: async (document, context) => {
     const mdx = await compileMDX(context, document, {
@@ -25,6 +27,7 @@ const tutorials = defineCollection({
       ...document,
       mdx,
       slug: document._meta.path,
+      week: document._meta.path.split("/")[0],
     };
   },
 });

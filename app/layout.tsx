@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ThemeProvider } from "next-themes";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -12,8 +13,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="max-w-7xl mx-auto p-6">{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body className="max-w-4xl w-full mx-auto p-6 bg-background scroll-smooth">
+        <ThemeProvider attribute="class" defaultTheme="light">
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

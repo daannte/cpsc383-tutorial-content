@@ -1,0 +1,269 @@
+---
+title: "Artificial Intelligence Markup Language (AIML)"
+tutorial: 2
+disabled: false
+---
+
+## Overview
+
+In this tutorial, we will set up a Python environment and AIML files to build a basic chatbot. You will learn how to define patterns, use wildcards, and add random responses to your bot,
+giving it the ability to interact more naturally.
+
+## Learning Goals
+
+- Understand the structure of AIML and how it is used to define chatbot behavior.
+- Set up a Python environment and install necessary packages to run AIML-based chatbots.
+- Create and modify AIML files to define patterns and responses.
+- Modify a chatbot to personalize responses and handle various input scenarios.
+
+## AIML Setup and Introduction
+
+Artificial Intelligence Markup Language (AIML) is a simple XML-based language used to create chatbots. It allows developers to define patterns (what the chatbot looks for) and responses
+(how the chatbot responds). AIML provides a framework for making rule-based chatbots, such as the well-known ALICE chatbot.
+
+<Steps>
+
+### Create a Virtual Environment
+
+Open your terminal and run the following commands:
+
+<Tabs defaultValue="mac/linux">
+
+<TabsList>
+
+<TabsTrigger value="mac/linux">Mac/Linux</TabsTrigger>
+<TabsTrigger value="windows">Windows</TabsTrigger>
+
+</TabsList>
+
+<TabsContent value="mac/linux">
+
+```bash
+python3 -m venv .venv 
+source .venv/bin/activate
+```
+
+</TabsContent>
+
+<TabsContent value="windows">
+
+```bash
+python -m venv .venv 
+.venv\Scripts\activate
+```
+
+</TabsContent>
+
+</Tabs>
+
+### Install the AIML package
+
+Once inside the virtual environment, install the `python-aiml` package using pip:
+
+```bash
+pip install python-aiml
+```
+
+</Steps>
+
+Now that we have everything setup, we need to create the AIML files that define the chatbot's behaviour. You'll need 3 files:
+
+1. `bot.py`: This is the Python script that will run the chatbot. 
+2. `std-startup.xml`: This is the main entry point for loading AIML files.
+3. `basic_chat.aiml`: This is where we define the chatbot’s patterns and responses.
+
+Let's now create these files.
+
+<Steps>
+
+### Create `std-startup.xml`
+
+The `std-startup.xml` file is the configuration entry point that tells the chatbot what AIML files to load when it starts.
+This file will include a `learn` tag to load the AIML files you create later.
+
+Create a new file named `std-startup.xml` and copy the following into the file:
+
+```xml
+<aiml version="1.0.1" encoding="UTF-8">
+    <!-- std-startup.xml -->
+
+    <!-- Category is an atomic AIML unit -->
+    <category>
+
+        <!-- Pattern to match in user input -->
+        <!-- If user enters "LOAD AIML B" -->
+        <pattern>LOAD AIML B</pattern>
+
+        <!-- Template is the response to the pattern -->
+        <!-- This learn an aiml file -->
+        <template>
+            <learn>basic_chat.aiml</learn>
+            <!-- You can add more aiml files here -->
+            <!--<learn>more_aiml.aiml</learn>-->
+        </template>
+        
+    </category>
+
+</aiml>
+```
+
+### Create `bot.py`
+
+The `bot.py` file will be the Python script that loads the AIML files and runs the chatbot.
+This is where the chatbot actually gets initialized, and it listens for user input.
+
+Create a new file named `bot.py` and copy the following Python code into it:
+
+```py
+import aiml
+
+# Create the kernel and learn AIML files
+kernel = aiml.Kernel()
+kernel.learn("std-startup.xml")
+kernel.respond("load aiml b")
+
+while True:
+    print(kernel.respond(input("Enter your message >> ")))
+```
+
+### Create `basic_chat.aiml`
+
+The `basic_chat.aiml` file is where we define the chatbot's patterns (what the chatbot looks for in the user's input)
+and templates (how the chatbot responds).
+
+Create a new file named `basic_chat.aiml` and add the following content:
+
+```xml
+<aiml version="1.0.1" encoding="UTF-8">
+    <category>
+        <pattern>HELLO</pattern>
+        <template>
+            Well, hello!
+        </template>
+    </category>
+    
+    <category>
+        <pattern>WHAT ARE YOU</pattern>
+        <template>
+            I'm a bot, silly!
+        </template>
+    </category>
+</aiml>
+```
+
+</Steps>
+
+## Testing Your Chatbot
+
+Once you’ve created all three files (`std-startup.xml`, `bot.py`, and `basic_chat.aiml`), you can run the chatbot.
+
+1. Make sure all your files are in the same directory as the `.venv`.
+2. Run the `bot.py` script:
+
+```bash
+python bot.py
+```
+
+## Understanding AIML Syntax
+
+Below is an explanation of the key components of AIML syntax that you’ll use to build and enhance your chatbot.
+
+### Key Components
+
+#### `<category>`
+
+The `<category>` element is the basic building block of AIML. It defines a pattern-response pair. Each `<category>`
+contains a `<pattern>` and a `<template>`.
+
+Example:
+
+```xml
+<category>
+    <pattern>HELLO</pattern>
+    <template>
+        Well, hello!
+    </template>
+</category>
+```
+
+#### `<pattern>`
+
+The `<pattern>` tag defines the exact words or phrases the chatbot listens for in user input. The content between the `<pattern>` tags must be all caps.
+AIML patterns are case-insensitive when interacting with the chatbot, and you can use wildcards to match multiple inputs.
+
+###### Wildcards
+
+- `*`: Matches any sequence of words.
+
+Example:
+
+```xml
+<pattern>WHAT IS YOUR NAME</pattern> <!-- Matches "What is your name" -->
+<pattern>MY NAME IS *</pattern> <!-- Matches any name after "My name is" -->
+```
+
+#### `<template>`
+
+The `<template>` tag defines the response the chatbot gives when it detects a matching pattern. 
+
+Example:
+
+```xml
+<category>
+    <pattern>HOW ARE YOU</pattern>
+    <template>I'm doing great, thank you for asking!</template>
+</category>
+```
+
+#### `<random>`
+
+The `<random>` tag allows you to define multiple responses for a single pattern. The chatbot will choose one response at random from the list each time it matches the pattern.
+This helps make the chatbot's responses feel more natural.
+
+Example:
+
+```xml
+<category>
+    <pattern>HOW ARE YOU</pattern>
+    <template>
+        <random>
+            <li>I'm doing great, thanks!</li>
+            <li>I'm good, how about you?</li>
+            <li>I'm feeling awesome today!</li>
+            <li>Not too great.</li>
+        </random>
+    </template>
+</category>
+```
+
+## Your Turn
+
+For your participation, you must modify the chatbot to meet the following goals.
+
+### Make the Chatbot Respond With Your Name
+
+Create a pattern that will make the chatbot respond with `Hello, <Your full name>`. 
+For example, if your full name is _John Doe_, the chatbot should respond:
+
+```py
+# Bacon is the trigger in this example.
+Enter your message >> bacon
+Hello, John Doe
+```
+
+### Using Wildcards and Random Responses
+
+For the second task, pick a pattern that utilizes wildcards (the `*` wildcard) and random responses to make the bot respond differently based on user input.
+
+Here’s an example of using a wildcard to catch anything after the phrase "One time I" and respond randomly:
+
+```py
+Enter your message >> one time i went to the park
+Are you telling the truth?
+Enter your message >> one time i fell down the stairs
+Try to tell me that another way.
+```
+
+### What to submit
+
+For this participation, you’ll need to submit an image that shows both the AIML code and the chatbot interaction demonstrating that your modifications are working.
