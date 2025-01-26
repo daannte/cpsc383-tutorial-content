@@ -20,7 +20,12 @@ const tutorials = allTutorials.reduce<TutorialsByWeek>((acc, tutorial) => {
   return acc;
 }, {});
 
-const sortedWeeks = Object.keys(tutorials).sort();
+const sortedWeeks = Object.keys(tutorials).sort((a, b) => {
+  const weekA = parseInt(a.replace(/\D/g, ""), 10);
+  const weekB = parseInt(b.replace(/\D/g, ""), 10);
+  return weekB - weekA;
+});
+
 sortedWeeks.forEach((week) => {
   tutorials[week].sort((a, b) => a.tutorial - b.tutorial);
 });
