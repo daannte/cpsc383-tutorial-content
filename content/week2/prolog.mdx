@@ -1,10 +1,213 @@
 ---
 title: "Prolog"
 tutorial: 2
-disabled: true
+disabled: false
 ---
 
 ## Overview
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+In this tutorial, we will learn some basic Prolog, a programming language widely used in AI, especially for tasks
+that involve searching and reasoning. Prolog is a programming language based on formal logic. It uses facts, rules
+and queries to find solutions. It's often used in problem-solving and natural language processing.
 
+## Syntax
+
+Now we will go over the prolog syntax.
+
+### Atoms (Constants)
+
+Atoms represents fixed values or simple facts. They are usually written in lowercase.
+
+For example:
+
+```prolog
+apple.
+john.
+alice.
+dog.
+```
+
+They can also be written as strings enclosed in single quotes.
+
+```prolog
+'Table'.
+'New York'.
+```
+
+### Variables
+
+Variables are placeholders that can represent any value. They start with an uppercase letter or an underscore. 
+
+For example:
+
+```prolog
+X.
+Y.
+_var.
+```
+
+When prolog encounters a variable, it tries to assign it a value that satisfies the rules or facts in the program.
+
+### Predicate
+
+Predicates are used to express relationships or properties about objects. It's made up of a name followed by parentheses.
+
+For example:
+
+```prolog
+likes(john, pizza).
+father(X, Y).
+```
+
+You might see `predicate/arity` often, where `predicate` refers to the name of the predicate, and `arity` indicates the number of arguments
+the predicate takes. From the example above, the predicate `likes(john, pizza)` can be referred as `likes/2`
+
+### Horn Clauses
+
+Horn clauses are a type of rule used to represent logical inferences. They are typically written as:
+
+```prolog
+Head :- Body.
+```
+
+The part before the `:-` is called the head, which represents the goal. The part after the `:-` is the body, which
+consists of one or more conditions that must hold true for the goal to apply.
+
+There are 2 forms of horn clauses:
+
+#### Facts
+
+Facts are basic statements about the world. They represent knowledge in the form of simple, unconditional statements.
+They are horn clauses with no body.
+
+```prolog
+parent(john, alice)
+```
+
+The fact states that john is parent of alice.
+
+#### Rules
+
+Rules define relationships between facts. They specify conditions under which something is true.
+They are a horn clause with both head and body.
+
+```prolog
+boy(john) :- son(john, alice)
+```
+
+The rule states that john is a boy if john is son of alice.
+
+## Example
+
+```prolog
+edge(a, b).
+edge(a, c).
+edge(b, d).
+edge(c, d).
+edge(d, e).
+
+dfs(Start, Goal, [Start|Path]) :- 
+    edge(Start, Next),
+    dfs(Next, Goal, Path).
+
+dfs(Start, Goal, [Start, Goal]) :- 
+    edge(Start, Goal).
+```
+
+- The `edge/2` facts defines the edges in the graph.
+- The first `dfs/3` predicate recursively explores the graph from `Start` to `Goal`.
+- The second `dfs/3` predicate serves as the base case. When there's a direct edge from `Start` to `Goal`, it returns the path.
+
+Let's query the database to find a path from `a` to `e`:
+
+```prolog
+?- dfs(a, e, Path)
+
+% Results:
+% Path = [a, b, d, e]
+% Path = [a, c, d, e]
+```
+
+### Why Prolog Returns Multiple Results
+
+The reason Prolog returns two different paths is because Prolog uses top-down depth-first search (DFS) combined with backtracking.
+
+### What happens during the search?
+
+When you run the query:
+
+```prolog
+?- dfs(a, e, Path).
+```
+
+Prolog tries to find a path from `a` to `e` using the rules defined in the `dfs/3` predicate. Here's the step-by-step breakdown:
+
+<Steps>
+
+### Prolog will first try to match the first `dfs/3` clause:
+
+```prolog
+dfs(Start, Goal, [Start|Path]) :- 
+    edge(Start, Next),    
+    dfs(Next, Goal, Path).
+```
+
+This clause tells Prolog that, to find a path from `Start` to `Goal`, it needs to look for an edge from `Start` to some `Next`, and
+then recursively find a path from `Next` to `Goal`. So, for `dfs(a, e, Path)`, Prolog will start by trying to find an edge from `a` to `Next`.
+
+### Exploring Edges from `a`
+
+If there is more than one edge starting from `a`, Prolog will try both possibilities one by one. In the above example, we have `a -> b` and `a -> c`.
+First, it will try `a -> b`, and then it will try `a -> c` when backtracking happens.
+
+### Recursion continues
+
+In the first case (`a -> b`), prolog will attempt `dfs(b, e, Path)`. It will then try to find an edge from `b` to some `Next`, and continue the search. In
+this case, we find the edge `b -> d`. We now continue with `dfs(d, e, Path)`. If Prolog finds an edge from `d` to `e`, it will match the second `dfs/3` clause:
+
+```prolog
+dfs(Start, Goal, [Start, Goal]) :- 
+    edge(Start, Goal).
+```
+
+This will return the path `[d, e]`, which is the base case.
+
+### Path Construction
+
+Prolog will now backtrack to build the full path:
+
+1. Path = `[b, d, e]`
+2. Path = `[a, b, d, e]`
+
+We finally have the complete path from `a` to `e`.
+
+### Other possibilities
+
+Prolog will now try and find other possibilities. As we know from earlier, we have `a -> c`. Prolog will repeat the entire process, and get us
+the other path: `[a, c, d, e]`.
+
+</Steps>
+
+## Participation Databases
+
+Max 3 per group.
+
+```prolog
+grandfather(X,Z) :- father(X,Y), parent(Y,Z). 
+parent(X,Y) :- father(X,Y). 
+parent(X,Y) :- mother(X,Y). 
+father(a,b). 
+father(d,b). 
+mother(b,c). 
+```
+
+```prolog
+witch(X):-burns(X),female(X).
+burns(X):-wooden(X).
+wooden(X):-floats(X).
+floats(X):-sameweight(duck, X).
+female(suspect2).
+female(suspect1).
+sameweight(goose,suspect2).
+sameweight(duck,suspect1).
+```
