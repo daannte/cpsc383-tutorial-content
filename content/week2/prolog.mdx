@@ -188,9 +188,25 @@ the other path: `[a, c, d, e]`.
 
 </Steps>
 
-## Participation Databases
+## Worksheet Databases
+
+You can complete the questions using [Swish](https://swish.swi-prolog.org/).
 
 Max 3 per group.
+
+### Questions 1-4
+```prolog
+grandfather(X,Z) :- father(X,Y), parent(Y,Z). 
+parent(X,Y) :- mother(X,Y). 
+parent(X,Y) :- father(X,Y). 
+father(a,b). 
+father(d,b). 
+mother(b,c). 
+```
+
+### Questions 5-6
+
+The difference in database below is that lines 2 and 3 are flipped.
 
 ```prolog
 grandfather(X,Z) :- father(X,Y), parent(Y,Z). 
@@ -200,6 +216,10 @@ father(a,b).
 father(d,b). 
 mother(b,c). 
 ```
+
+<Image src="/flow.png" alt="Question 5 Mermaid Diagram" width={1024} height={1024} className="mx-auto" />
+
+### Questions 7-9
 
 ```prolog
 witch(X):-burns(X),female(X).
