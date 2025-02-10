@@ -1,11 +1,13 @@
 import { useMDXComponent } from "@content-collections/mdx/react";
 import { cn, getImagePath } from "@/lib/utils";
 
+import Admonition from "@/components/Admonition";
 import Image from "next/image";
 import Link from "next/link";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const components = {
+  Admonition,
   h1: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h1
       className={cn("mt-2 scroll-m-20 text-4xl font-bold", className)}
