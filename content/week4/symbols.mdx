@@ -5,3 +5,133 @@ disabled: false
 ---
 
 ## Overview
+
+In this tutorial, you will be helping to create the dataset that will be used in the AEGIS
+system for your third assignment.
+
+## Download script and Setup
+
+Head over to D2L and download the `symbols_code` zip.
+
+We'll have to create a venv to download some packages that are required to use the `symbols.py` script.
+
+<Steps>
+
+### Create a Virtual Environment
+
+Open your terminal and run the following commands:
+
+<Tabs defaultValue="mac/linux">
+
+<TabsList>
+
+<TabsTrigger value="mac/linux">Mac/Linux</TabsTrigger>
+<TabsTrigger value="windows">Windows</TabsTrigger>
+
+</TabsList>
+
+<TabsContent value="mac/linux">
+
+```bash
+python3 -m venv .venv 
+source .venv/bin/activate
+```
+
+</TabsContent>
+
+<TabsContent value="windows">
+
+```bash
+python -m venv .venv 
+.venv\Scripts\activate
+```
+
+</TabsContent>
+
+</Tabs>
+
+### Install packages
+
+Once inside the virtual environment, install the following packages using pip:
+
+```bash
+pip install Pillow numpy 
+```
+
+</Steps>
+
+## Tkinter error
+
+If you are using Mac or Linux you might run into the following error:
+
+```bash
+import _tkinter # If this fails your Python may not be configured for Tk
+^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named '_tkinter'
+```
+
+To fix this, you'll have to use a package manager to install `tkinter`.
+
+<Tabs defaultValue="mac">
+
+<TabsList>
+
+<TabsTrigger value="mac">Mac</TabsTrigger>
+<TabsTrigger value="linux">Linux</TabsTrigger>
+
+</TabsList>
+
+<TabsContent value="mac">
+
+You'll have to install [homebrew](https://brew.sh/), and then install the `python-tk@3.12` package.
+
+<Steps>
+
+### Setup Homebrew
+
+Run the following in your terminal:
+
+```bash
+/bin/bash -c "$(curl -fsSL \
+https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+### Install tkinter
+
+Once homebrew is installed, run the following in your terminal:
+
+```bash
+brew install python-tk@3.12
+```
+
+</Steps>
+
+Once everything is installed, delete and remake the virtual environment.
+
+</TabsContent>
+
+<TabsContent value="linux">
+
+You'll have to install the appropriate package for your distribution 
+(e.g., `python3-tk`, `python3-tkinter`, or `tk`).
+
+Once everything is installed, delete and remake the virtual environment.
+
+</TabsContent>
+
+</Tabs>
+
+## Running the script
+
+In the symbols folder, run `python symbols.py`, and follow the instructions on the screen.
+
+<Admonition title="Mac Dark Mode" variant="info">
+
+If you're using dark mode on your system, switch to light mode when drawing,
+as the lines you make won't be visible.
+
+</Admonition>
+
+## Participation
+
+Submit the `symbols.npy` file to the D2L dropbox.
