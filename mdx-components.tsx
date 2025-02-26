@@ -4,10 +4,26 @@ import { cn, getImagePath } from "@/lib/utils";
 import Admonition from "@/components/Admonition";
 import Image from "next/image";
 import Link from "next/link";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const components = {
   Admonition,
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
   h1: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h1
       className={cn("mt-2 scroll-m-20 text-4xl font-bold", className)}

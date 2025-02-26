@@ -1,0 +1,93 @@
+---
+title: "Perceptron"
+tutorial: 1
+disabled: false
+---
+
+## Overview
+
+In this tutorial, you will learn about the perceptron, how its algorithm works, and how it finds a linear separator.
+
+## What is the Perceptron?
+
+The perceptron is one of the earliest methods for finding a linear classifier, a line that separates a dataset into positive and negative points. 
+
+<Admonition variant="info" title="Clarification">  
+The perceptron is often mistakenly referred to as a type of neuron (we'll learn about neurons in another tutorial). In this tutorial,
+we focus on the perceptron as a classification algorithm.  
+</Admonition>
+
+## History of the Perceptron
+
+The perceptron concept was first introduced in 1943 by neuroscientist Warren S. McCulloch and mathematician Walter Pitts,
+inspired by the wiring of neurons in the brain. In 1958, Frank Rosenblatt created the first electronic perceptron, the Mark 1,
+which learned from input data and adjusted weights similar to Hebbian learning (a principle where neurons that fire together strengthen their connection).
+It gained attention for tasks like image
+recognition and handwriting analysis. However, by the 1960s, its limitations became clear. Its inability to solve
+non-linearly separable problems. This critique led to the _AI winter_, a period of reduced interest in neural networks. Despite this setback,
+the perceptron’s foundational ideas later resurged, forming the basis for modern artificial neural networks and deep learning.
+
+## How the Perceptron Works
+
+The perceptron algorithm works iteratively to adjust a decision boundary until it correctly classifies all data points (if the data is linearly separable). It follows these steps:
+
+<Steps>
+
+### Initialization
+
+Start by initializing the weights (a, b, c) for the line represented by the equation:
+`ax + by + c = 0`
+
+### Iterate
+
+- If the point is classified correctly, do nothing.
+- If the point is misclassified, update the line using the following formula:
+
+```bash
+a <- a + s * x
+b <- b + s * y
+c <- c + s
+```
+
+where `(x, y)` is the misclassified point, and `s` is its label (`+1` or `-1`).
+This adjusts the line so that it is closer to correctly classifying the point where it made a mistake
+
+### Repeat until termination
+
+Once the perceptron has found a separator that correctly classifies all data points, it will never update again and the
+algorithm will terminate
+
+</Steps>
+
+## Convergence of the Perceptron
+
+The convergence theorem states that if the dataset is linearly separable, the perceptron algorithm is guaranteed to find a linear classifier in at most:
+`( R / γ )^2` steps, where:
+
+- **R** is the maximum radius of the data. This captures how "spread out" the points are.
+- **γ** is the margin, representing the smallest distance between positive and negative points.
+
+<Admonition variant="info" title="Intuition">  
+If points are widely spread apart relative to the margin, finding a classifier is easier. If they are too close together,
+the perceptron may need more iterations.
+</Admonition>
+
+## Interactive Perceptron Demo
+
+You can experiment with a perceptron simulation here:
+
+[Perceptron Demo](https://cspages.ucalgary.ca/~jcleahy/CPSC383_F24/perceptron.html)
+
+Start with the outlier probability set to 0. Adjust it later to observe the changes in classification behavior.
+
+### Definitions
+
+- A **step** refers to processing a single data point.
+- A **epoch** is one full pass through all data points in the dataset.
+
+
+## Worksheet
+
+<a className="font-medium underline underline-offset-2 hover:underline-offset-4 transition-all duration-300 dark:text-teal-400 text-teal-500"
+href="/~dante.kirsman/cpsc383/Perceptron-worksheet.pdf" download>Download Worksheet</a>
+

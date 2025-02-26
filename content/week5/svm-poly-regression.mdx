@@ -1,0 +1,119 @@
+---
+title: "SVMs and Polynomial Regression"
+tutorial: 2
+disabled: false
+---
+
+<Admonition variant="danger" title="Wrong Information">  
+Last tutorial I said that the input was the `(x, y)` point and label, and the output was the line for the perceptron.
+That's wrong (this is what happens when you talk about lines for 20min). The input is the `(x, y)` point and the output is the label, `-1` or `+1`.
+</Admonition>
+
+## Overview
+
+In this tutorial, we will go over SVMs and Polynomial Regression.
+
+## SVMs (Support Vector Machines)
+
+As a rough overview, the goal of an SVM is to find a linear classifier for a dataset, just like the perceptron.
+The main difference is that the perceptron will stop learning once it has found ***any*** correct solution. SVMs, on the other hand, will look for the linear classifier
+with the widest margin, the _best_ solution in a sense. 
+
+<Admonition variant="caution" title="Kernels">  
+A large part of the power of SVMs has to do with kernels (embedding the problem into a higher-dimensional space), but we won’t go there for the purposes
+of this tutorial, as it is outside the scope of this class.
+</Admonition>
+
+### Understanding the Margin
+
+A useful way to think about SVMs is to imagine drawing the widest road between two groups of data points, ensuring that it separates them as well as possible.
+The median of this road is the final solution.
+
+[Visualize Widest Road](https://en.wikipedia.org/wiki/Support_vector_machine#/media/File:Svm_separating_hyperplanes_(SVG).svg)
+
+### SVM Simulation
+
+You can experiment with a SVM simulation here:
+
+[SVM Simulation](https://greitemann.dev/svm-demo)
+
+To start with, set `v` to the lowest possible value. This value is the regularization parameter, which indicates how tolerant the model
+is towards misclassified data points.
+
+## Polynomial Regression
+
+Polynomial regression involves fitting a polynomial function to a dataset. It extends linear regression by allowing the relationship between the independent variable
+(`x`) and the dependent variable (`y`) to be represented as an nth-degree polynomial. This flexibility enables the model to capture non-linear trends in the data that
+a simple linear model might miss. When predicting a new input, it plugs into the polynomial to estimate the corresponding output.
+
+### Study Example: Hours of Study vs. Exam Performance
+
+Imagine you are studying for an exam, and you want to understand how the number of hours you study (`x`) affects your exam score (`y`). Initially, you might assume that more
+study hours always lead to better performance. However, after a certain point, the increase in performance might start to level off, or even decrease if you study too much and
+get fatigued.
+
+For example, let's consider this data:
+
+<Table>
+  <TableCaption>Study Hours vs. Exam Score</TableCaption>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Hours of Study (x)</TableHead>
+      <TableHead>Exam Score (y)</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>1</TableCell>
+      <TableCell>55</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>2</TableCell>
+      <TableCell>60</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>3</TableCell>
+      <TableCell>65</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>4</TableCell>
+      <TableCell>75</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>5</TableCell>
+      <TableCell>85</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>6</TableCell>
+      <TableCell>95</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>7</TableCell>
+      <TableCell>98</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>8</TableCell>
+      <TableCell>97</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>9</TableCell>
+      <TableCell>90</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+
+A simple linear regression model might fit the data, but it wouldn't capture the leveling-off effect that happens after a certain number of study hours. Polynomial regression,
+on the other hand, could fit a curve to this data, where the relationship between study hours and exam score is non-linear. This model would better reflect the fact that increasing
+study hours does not always lead to linear improvements in performance.
+
+### Polynomial Regression Simulation
+
+You can experiment with a Polynomial Regression simulation here:
+
+[Polynomial Regression Simulation](https://visualize-it.github.io/polynomial_regression/simulation.html)
+
+## Worksheet
+
+<a className="font-medium underline underline-offset-2 hover:underline-offset-4 transition-all duration-300 dark:text-teal-400 text-teal-500"
+href="/~dante.kirsman/cpsc383/SVM-worksheet.pdf" download>Download Worksheet</a>
+
