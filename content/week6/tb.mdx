@@ -1,0 +1,71 @@
+---
+title: "Tensorboard"
+tutorial: 2
+disabled: false
+---
+
+## Overview
+
+In this tutorial, we will go over TensorBoard.
+
+## What is TensorBoard?
+
+TensorBoard is a visualization toolkit for TensorFlow (and other frameworks) that helps you understand, debug, and optimize your machine learning models.
+It provides visual insights into your training process through interactive dashboards.
+
+## How to use TensorBoard
+
+<Steps>
+
+### Install TensorBoard
+
+It should come installed with tensorflow. You can check with
+
+```bash
+pip show tensorboard
+```
+
+If not already installed, then run:
+
+```bash
+pip install tensorboard
+```
+
+### Add code
+
+To enable TensorBoard for your model training, you can use the following code:
+
+```py
+import tensorflow as tf
+import datetime
+
+# Define the log directory to store TensorBoard logs
+log_dir = f"logs/fit/{datetime.datetime.now().strftime('%Y%m%d-%H%M%S')}"
+
+# Define TensorBoard callback
+tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1)
+
+# Fit the model with TensorBoard callback
+# Im using ... to ignore the other arguments, add the actual arguments there.
+model.fit(..., callbacks=[tensorboard_callback])
+```
+
+</Steps>
+
+## Visualize with TensorBoard
+
+After training your model, you can visualize with TensorBoard by running:
+
+```bash
+tensorboard --logdir <path to logs> 
+```
+
+With the example above, we would do:
+
+```bash
+tensorboard --logdir logs/fit 
+```
+
+Then, open your browser and go to the URL displayed in your terminal (or just click on it). The URL
+is typically `http://localhost:6006`.
+
