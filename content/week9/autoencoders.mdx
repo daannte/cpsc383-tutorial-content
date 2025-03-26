@@ -1,0 +1,51 @@
+---
+title: "Autoencoders"
+tutorial: 2
+disabled: false
+---
+
+## Overview
+
+In this tutorial, you will build an autoencoder for the MNIST dataset.
+
+## What is an Autoencoder?
+
+An autoencoder is a neural network designed to compress input data into a smaller representation 
+and then reconstruct the original input from that compressed form.
+
+An autoencoder consists of three key components:
+
+<Steps>
+
+### Encoder
+
+This part of the network compresses the input into a lower-dimensional representation. In this tutorial,
+the input is a flattened 784-pixel image (28x28), and the encoder compresses it to a smaller number of neurons.
+
+### Bottleneck
+
+The middle layer, often called the bottleneck, contains a reduced set of features representing the most important information from the input.
+The idea is that through this compression the network learns the key patterns and structures of the input data.
+
+Experimenting with different values (100, 10, and 2) will show how this affects reconstruction quality.
+
+### Decoder
+
+This part reconstructs the original input (28x28) from the encoded representation. Ideally, the decoder should produce an output
+as close as possible to the original image.
+
+</Steps>
+
+Since we are comparing pixel values between the original and reconstructed images, we need to use a Mean Squared Error (MSE) loss function rather
+than crossentropy since we are no longer comparing probabilities. MSE measures how much the reconstructed image deviates from the original by
+averaging the squared differences across all pixels.
+
+## Participation
+
+<a className="font-medium underline underline-offset-2 hover:underline-offset-4 transition-all duration-300 dark:text-teal-400 text-teal-500"
+href="/~dante.kirsman/cpsc383/Autoencoders-worksheet.pdf" download>Download Worksheet</a>
+
+<br/>
+
+<a className="font-medium underline underline-offset-2 hover:underline-offset-4 transition-all duration-300 dark:text-teal-400 text-teal-500"
+href="/~dante.kirsman/cpsc383/autoencoder_starter.py" download>Download Starter Code</a>
